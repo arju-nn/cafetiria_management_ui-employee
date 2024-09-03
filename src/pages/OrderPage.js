@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Add useEffect for retrieving user name
 import { Card, Row, Col, message, Button } from 'antd';
-import { useNavigate } from 'react-router-dom'; // Ensure this hook is imported for navigation
+import { useNavigate } from 'react-router-dom'; 
 import OrderForm from '../components/Order/OrderForm';
 import OrderSummary from '../components/Order/OrderSummary';
 import OrderService from '../services/orderServices';
@@ -8,7 +8,16 @@ import OrderService from '../services/orderServices';
 const OrderPage = () => {
     const [order, setOrder] = useState({ items: [] });
     const [loading, setLoading] = useState(false);
+    const [userName, setUserName] = useState(''); // State to hold the user name
     const navigate = useNavigate(); // Initialize the navigate hook
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        console.log('user: ', user);
+        if (user) {
+            setUserName(user.user.email); // Assuming user object has a 'name' property
+        }
+    }, []); // Empty dependency array to run the effect only once
 
     const logOut = () => {
         localStorage.removeItem("user");
@@ -47,7 +56,12 @@ const OrderPage = () => {
     return (
         <Card 
             title="Order" 
-            extra={<Button type="primary" onClick={logOut}>Logout</Button>} // Add the Logout button here
+            extra={
+                <div>
+                    <span style={{ fontWeight: 'bold', marginRight: '10px' }}>{userName}</span> {/* Apply styles to the username */}
+                    <Button type="primary" onClick={logOut}>Logout</Button>
+                </div>
+            }
             style={{ maxWidth: '800px', margin: '20px auto', padding: '20px', borderRadius: '10px', backgroundColor: '#f9f9f9' }}
         >
             <Row gutter={16} style={{ display: 'flex', flexDirection: 'row' }}>
