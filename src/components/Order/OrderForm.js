@@ -60,12 +60,13 @@ const OrderForm = ({ onOrderSubmit }) => {
                                 </Form.Item>
                             </Col>
                             <Col span={12} style={{ textAlign: 'right' }}>
+                                <Button type="default" onClick={() => form.setFieldsValue({ [item.name]: Math.max(0, form.getFieldValue(item.name) - 1) })} style={{ marginRight: '10px' }}>
+                                    -
+                                </Button>
                                 <Button type="primary" onClick={() => form.setFieldsValue({ [item.name]: form.getFieldValue(item.name) + 1 })}>
                                     +
                                 </Button>
-                                <Button type="default" onClick={() => form.setFieldsValue({ [item.name]: Math.max(0, form.getFieldValue(item.name) - 1) })} style={{ marginLeft: '10px' }}>
-                                    -
-                                </Button>
+                               
                             </Col>
                         </Row>
                     </Card>
