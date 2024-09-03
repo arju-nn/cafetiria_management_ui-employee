@@ -25,6 +25,11 @@ const OrderPage = () => {
         navigate("/login");
     };
 
+    const handleItemChange = (updatedItems) => {
+        console.log({updatedItems});
+        setOrder({ items: updatedItems.items });
+    };
+
     const handleOrderSubmit = async (newOrder) => {
         const total = OrderService.calculateTotal(newOrder.items);
         setOrder({ items: newOrder.items });
@@ -67,6 +72,7 @@ const OrderPage = () => {
             <Row gutter={16} style={{ display: 'flex', flexDirection: 'row' }}>
                 <Col span={12}>
                     <OrderForm 
+                        onItemChange={handleItemChange}
                         onOrderSubmit={handleOrderSubmit} 
                         order={order} 
                     />
